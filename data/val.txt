@@ -1,0 +1,2 @@
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/running/4 0
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/ApplyEyeMakeup/4 1
