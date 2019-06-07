@@ -1,5 +1,5 @@
 # CNNLSTM Video Classification
-3D CNNLSTMM for Video Classification
+Implementation of CNN+LSTM in Pytorch for Video Classification
 
 ## Getting Started
 ### Prerequisites
