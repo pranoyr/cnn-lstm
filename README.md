@@ -3,8 +3,7 @@ Implementation of CNN+LSTM in Pytorch for Video Classification
 
 ## Getting Started
 ### Prerequisites
-1. TensorFlow
-2. Keras
+1. Pytorch
 
 ### Train
 ```
