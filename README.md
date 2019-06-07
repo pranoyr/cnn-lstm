@@ -3,7 +3,7 @@ Implementation of CNN+LSTM in Pytorch for Video Classification
 
 ## Getting Started
 ### Prerequisites
-1. Pytorch
+Pytorch 1.1.0 
 
 ### Train
 ```
