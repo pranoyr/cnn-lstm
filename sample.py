@@ -1,42 +1,22 @@
+
+import torchvision.models as models
+from torchvision import models
+
+
+import torch.nn as nn
 import torch
- 
-# x = torch.randn(2)
 
-# y = torch.randn(2)
+resnet = models.resnet152(pretrained=False)
+modules = list(resnet.children())[:-1]      # delete the last fc layer.
 
-# y=torch.Tensor([1,2])
+resnet_1 = nn.Sequential(*modules)
 
-# # l = []
+x = torch.Tensor(1,3,300,300)
 
-# # l.append(x)
-# # l.append(y)
+output = resnet_1(x)
 
-
-# # z = torch.stack(l)
-
-# # print(z)
+for layer in resnet_1:
+    x = layer(x)
+    print(x.size())
 
 
-# print(y)
-
-# import torch.nn as nn
-# import torch
-
-input_5d = torch.randn(2,2)
-print(input_5d)
-y  = input_5d.view(-1,)
-print(y)
-# print(input)
-
-# input = input[-1,:]
-
-# print(input)
-
-
-# for t in range(input_5d.size(1)):
-#             # ResNet CNN
-#             with torch.no_grad():
-#                 x = input_5d[:, t, :, :, :]  # ResNet
-#                 print(x.size())
-#                 x = x.view(x.size(0), -1) # flatten output of conv
-#                 print(x.size())
