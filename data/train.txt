@@ -1,6 +1,8 @@
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/running/1 0
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/ApplyEyeMakeup/2 1
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/running/3 0
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/ApplyEyeMakeup/1 1
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/running/2 0
-/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/image_data/ApplyEyeMakeup/3 1
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/ApplyEyeMakeup/.DS_Store 1
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/running/.DS_Store 0
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/ApplyEyeMakeup/1.avi 1
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/running/1.avi 0
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/ApplyEyeMakeup/3.avi 1
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/running/3.avi 0
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/running/2.avi 0
+/Users/pranoyr/PycharmProjects/Pytorch/cnn-lstm/data/video_data/ApplyEyeMakeup/4.avi 1

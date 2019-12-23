@@ -98,7 +98,7 @@ def train(model, device, training_generator, optimizer, epoch, log_interval):
         y_pred = torch.max(out_rnn, 1)[1]  # y_pred != output
         correct = accuracy_score(y.cpu().data.squeeze().numpy(), y_pred.cpu().data.squeeze().numpy())
    
-
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 

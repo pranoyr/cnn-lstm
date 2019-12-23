@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 # parser = argparse.ArgumentParser()
 # parser.add_argument('--data', type=str, default='./video_action_recognition', help='path to dataset')
 # opt = parser.parse_args()
-image_folder="image_data"
+image_folder="video_data"
 abs_path=os.path.dirname(os.path.abspath(image_folder))
 
 # cleans .txt files
