@@ -85,13 +85,13 @@ def train(model, device, training_generator, optimizer, epoch, log_interval):
     for i, (X, y) in enumerate(training_generator):
         # Transfer to GPU
         X, y = X.to(device), y.to(device)
-
         N_count += X.size(0)
-
         out_cnn = encoder_cnn(X)
         #out1 = out1.reshape(3, -1, 1000).to(device)
         out_rnn = decoder_rnn(out_cnn)
+
         loss = F.cross_entropy(out_rnn, y)
+        train_loss += loss.item()
         losses.append(loss.item())
 
         # to compute accuracy
