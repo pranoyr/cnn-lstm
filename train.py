@@ -18,7 +18,6 @@ def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epo
     losses = AverageMeter()
     accuracies = AverageMeter()
     for batch_idx, (data, targets) in enumerate(data_loader):
-        print(data.shape)
         data, targets = data.to(device), targets.to(device)
         out_cnn = encoder_cnn(data)
         outputs = decoder_rnn(out_cnn)
