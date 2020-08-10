@@ -55,6 +55,12 @@ def parse_opts():
 		help='If true, inputs are not normalized by mean.')
 	parser.set_defaults(no_mean_norm=False)
 	parser.add_argument(
+        '--mean_dataset',
+        default='activitynet',
+        type=str,
+        help=
+        'dataset for mean values of mean subtraction (activitynet | kinetics)')
+	parser.add_argument(
 		'--use_cuda',
 		action='store_true',
 		help='If true, use GPU.')
