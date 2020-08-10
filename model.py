@@ -38,7 +38,7 @@ class EncoderCNN(nn.Module):
             cnn_embed_seq.append(x)
 
         # swap time and sample dim such that (sample dim, time dim, CNN latent dim)
-        cnn_embed_seq = torch.stack(cnn_embed_seq, dim=0)
+        cnn_embed_seq = torch.stack(cnn_embed_seq, dim=0).transpose_(0, 1)
         # cnn_embed_seq: shape=(time_step, batch, input_size)
 
         return cnn_embed_seq
@@ -53,6 +53,7 @@ class DecoderRNN(nn.Module):
             input_size=300,
             hidden_size=256,
             num_layers=3,
+            batch_first=True
             # input & output will has batch size as 1s dimension. e.g. (time_step, batch, input_size)
         )
 
@@ -67,7 +68,7 @@ class DecoderRNN(nn.Module):
         out, (h_n, h_c) = self.LSTM(x, None)
         # FC layers
         # choose RNN_out at the last time step
-        x = self.fc1(out[-1, :, :])
+        x = self.fc1(out[:, -1, :])
         x = F.relu(x)
         #x = F.dropout(x, p=0.3)
         x = self.fc2(x)
