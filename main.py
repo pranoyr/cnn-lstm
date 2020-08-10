@@ -51,9 +51,9 @@ if __name__ == "__main__":
 	train_data = UF101Dataset(partition['train'], labels, transform)
 	val_data = UF101Dataset(partition['val'], labels, transform)
 	train_loader = DataLoader(
-		train_data, batch_size=1, shuffle=False, collate_fn=train_data.my_collate)
+		train_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=train_data.my_collate)
 	val_loader = DataLoader(
-		val_data, batch_size=1, shuffle=False, collate_fn=val_data.my_collate)
+		val_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=val_data.my_collate)
 
 	# tensorboard
 	summary_writer = tensorboardX.SummaryWriter(log_dir='tf_logs')
