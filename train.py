@@ -31,7 +31,7 @@ def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epo
 
         optimizer.zero_grad()
         loss.backward()
-        # optimizer.step()
+        optimizer.step()
 
         if (batch_idx + 1) % log_interval == 0:
             avg_loss = train_loss / log_interval
