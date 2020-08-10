@@ -91,8 +91,11 @@ if __name__ == "__main__":
 	decoder_rnn = DecoderRNN().to(device)
 
 	# optimizer
-	crnn_params = list(encoder_cnn.parameters()) + \
-		list(decoder_rnn.parameters())
+	# crnn_params = list(encoder_cnn.parameters()) + \
+	# 	list(decoder_rnn.parameters())
+	crnn_params = list(encoder_cnn.module.fc1.parameters()) + list(encoder_cnn.module.bn1.parameters()) + \
+                  list(encoder_cnn.module.fc2.parameters()) + list(encoder_cnn.module.bn2.parameters()) + \
+                  list(encoder_cnn.module.fc3.parameters()) + list(decoder_rnn.parameters())
 	optimizer = torch.optim.Adam(crnn_params)
 
 	scheduler = lr_scheduler.ReduceLROnPlateau(
