@@ -37,7 +37,7 @@ if __name__ == "__main__":
 	# Parameters
 	params = {'batch_size': 4,
           'shuffle': True,
-          'num_workers': 1}
+          'num_workers': 0}
 
 	# Datasets
 	partition, labels = load_data(opt.dataset)
