@@ -11,7 +11,7 @@ class EncoderCNN(nn.Module):
         super(EncoderCNN, self).__init__()
 
 
-        resnet = models.resnet101(pretrained=False)
+        resnet = models.resnet101(pretrained=True)
         modules = list(resnet.children())[:-1]      # delete the last fc layer.
         self.resnet = nn.Sequential(*modules)
 
@@ -71,6 +71,6 @@ class DecoderRNN(nn.Module):
         # choose RNN_out at the last time step
         x = self.fc1(out[-1, :, :])
         x = F.relu(x)
-        x = F.dropout(x, p=0.3)
+        #x = F.dropout(x, p=0.3)
         x = self.fc2(x)
         return x
