@@ -93,7 +93,7 @@ if __name__ == "__main__":
 	# optimizer
 	crnn_params = list(encoder_cnn.parameters()) + \
 		list(decoder_rnn.parameters())
-	optimizer = torch.optim.Adam()
+	optimizer = torch.optim.Adam(decoder_rnn.parameters())
 
 	scheduler = lr_scheduler.ReduceLROnPlateau(
 		optimizer, 'min', patience=opt.lr_patience)
