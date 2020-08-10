@@ -11,7 +11,7 @@ class EncoderCNN(nn.Module):
         super(EncoderCNN, self).__init__()
 
 
-        resnet = models.resnet18(pretrained=False)
+        resnet = models.resnet101(pretrained=False)
         modules = list(resnet.children())[:-1]      # delete the last fc layer.
         self.resnet = nn.Sequential(*modules)
 
