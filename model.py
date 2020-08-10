@@ -68,7 +68,7 @@ class DecoderRNN(nn.Module):
         # FC layers
         # choose RNN_out at the last time step
         x = self.fc1(out[-1, :, :])
-        x = F.relu(x)
+        # x = F.relu(x)
         #x = F.dropout(x, p=0.3)
         x = self.fc2(x)
         return x
