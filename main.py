@@ -41,6 +41,7 @@ if __name__ == "__main__":
 	device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
 
 	# train loader
+	opt.mean = get_mean(opt.norm_value, dataset=opt.mean_dataset)
 	if opt.no_mean_norm and not opt.std_norm:
     		norm_method = Normalize([0, 0, 0], [1, 1, 1])
 	elif not opt.std_norm:
