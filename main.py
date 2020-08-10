@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
 		# saving weights to checkpoint
 		if (epoch) % opt.save_interval == 0:
-			scheduler.step(val_loss)
+			# scheduler.step(val_loss)
 			# write summary
 			summary_writer.add_scalar(
 				'losses/train_loss', train_loss, global_step=epoch)
