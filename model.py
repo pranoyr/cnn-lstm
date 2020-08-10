@@ -64,7 +64,7 @@ class DecoderRNN(nn.Module):
             None represents zero initial hidden state. RNN_out has shape=(time_step, batch, output_size)
         """
         self.LSTM.flatten_parameters()
-        out, (h_n, h_c) = self.LSTM(x, None)
+        out, (h_n, h_c) = self.LSTM(x)
         # FC layers
         # choose RNN_out at the last time step
         x = self.fc1(out[-1, :, :])
