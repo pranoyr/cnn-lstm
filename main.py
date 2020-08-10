@@ -3,9 +3,15 @@ from torch.utils.data import DataLoader
 from validation import val_epoch
 from opts import parse_opts
 from torch.optim import lr_scheduler
-from utils import *
-from dataset import UF101Dataset
+from dataset import get_training_set, get_validation_set
 from model import EncoderCNN, DecoderRNN
+from mean import get_mean, get_std
+from spatial_transforms import (
+	Compose, Normalize, Scale, CenterCrop, CornerCrop, MultiScaleCornerCrop,
+	MultiScaleRandomCrop, RandomHorizontalFlip, ToTensor)
+from temporal_transforms import LoopPadding, TemporalRandomCrop
+from target_transforms import ClassLabel, VideoID
+from target_transforms import Compose as TargetCompose
 
 import torch
 import torch.nn as nn
@@ -34,21 +40,47 @@ if __name__ == "__main__":
 	use_cuda = torch.cuda.is_available()
 	device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
 
-	# Datasets
-	partition, labels = load_data(opt.dataset)
+	# train loader
+	if opt.no_mean_norm and not opt.std_norm:
+    		norm_method = Normalize([0, 0, 0], [1, 1, 1])
+	elif not opt.std_norm:
+		norm_method = Normalize(opt.mean, [1, 1, 1])
+	else:
+		norm_method = Normalize(opt.mean, opt.std)
+	spatial_transform = Compose([
+			# crop_method,
+			Scale((opt.sample_size, opt.sample_size)),
+			# RandomHorizontalFlip(),
+			ToTensor(opt.norm_value), norm_method
+		])
+	temporal_transform = TemporalRandomCrop(16)
+	target_transform = ClassLabel()
+	training_data = get_training_set(opt, spatial_transform,
+										 temporal_transform, target_transform)
+	train_loader = torch.utils.data.DataLoader(
+			training_data,
+			batch_size=opt.batch_size,
+			shuffle=True,
+			num_workers=opt.num_workers,
+			pin_memory=True)
 
-	# preprocesing
-	transform = transforms.Compose([transforms.Resize([256, 342]),
-									transforms.ToTensor(),
-									transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-
-	# generators
-	train_data = UF101Dataset(partition['train'], labels, transform)
-	val_data = UF101Dataset(partition['val'], labels, transform)
-	train_loader = DataLoader(
-		train_data, batch_size=opt.batch_size, shuffle=False, num_workers=opt.num_workers, collate_fn=train_data.my_collate)
-	val_loader = DataLoader(
-		val_data, batch_size=opt.batch_size, shuffle=False, num_workers=opt.num_workers, collate_fn=val_data.my_collate)
+	# validation loader
+	spatial_transform = Compose([
+			Scale((opt.sample_size,opt.sample_size)),
+			#CenterCrop(opt.sample_size),
+			ToTensor(opt.norm_value), norm_method
+		])
+	target_transform = ClassLabel()
+	temporal_transform = LoopPadding(16)							 
+	validation_data = get_validation_set(
+			opt, spatial_transform, temporal_transform, target_transform)
+	val_loader = torch.utils.data.DataLoader(
+			validation_data,
+			batch_size=opt.batch_size,
+			shuffle=False,
+			num_workers=opt.num_workers,
+			pin_memory=True)
+	
 
 	# tensorboard
 	summary_writer = tensorboardX.SummaryWriter(log_dir='tf_logs')

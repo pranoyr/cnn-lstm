@@ -1,51 +1,86 @@
-import torch
-from torch.utils import data
-from PIL import Image
-import os
-
-class UF101Dataset(data.Dataset):
-	'Characterizes a dataset for PyTorch'
-	def __init__(self, list_IDs, labels, transform=None):
-		'Initialization'
-		self.labels = labels
-		self.list_IDs = list_IDs
-		self.transform = transform
-
-	def __len__(self):
-		'Denotes the total number of samples'
-		return len(self.list_IDs)
-
-	def my_collate(self, batch):
-		videos = [] 
-		targets = []
-		for item in batch:
-			videos.append(item[0])
-			targets.append(item[1])
-
-		videos = torch.cat(videos)
-		targets = torch.cat(targets)
-		# flatten
-		# targets = targets.view(-1)
-		targets = targets.type(torch.LongTensor)
-		return videos, targets
+# from datasets.kinetics import Kinetics
+# from datasets.activitynet import ActivityNet
+from datasets.ucf101 import UCF101
+# from datasets.hmdb51 import HMDB51
 
 
-	def __getitem__(self, index):
-		'Generates one sample of data'
-		# Select sample
-		path = self.list_IDs[index]
-		folder = os.listdir(path)
-		X = []
-		for img_name in folder:
-			img = Image.open(os.path.join(path,img_name))
-			img = self.transform(img)
-			X.append(img)
+def get_training_set(opt, spatial_transform, temporal_transform,
+                     target_transform):
+    if opt.dataset == 'ucf101':
+        training_data = UCF101(
+            opt.video_path,
+            opt.annotation_path,
+            'training',
+            spatial_transform=spatial_transform,
+            temporal_transform=temporal_transform,
+            target_transform=target_transform)
 
-		n = 16
-		X = [torch.stack(X[i * n:(i + 1) * n]) for i in range((len(X) + n - 1) // n ) if len(X[i * n:(i + 1) * n]) == n]
-		X = torch.stack(X)
+    return training_data
 
-		# y = self.labels[path]
-		Y = [self.labels[path] for _ in range(len(X))]
-		Y = torch.Tensor(Y)
-		return X, Y
+
+def get_validation_set(opt, spatial_transform, temporal_transform,
+                       target_transform):
+    if opt.dataset == 'ucf101':
+        validation_data = UCF101(
+            opt.video_path,
+            opt.annotation_path,
+            'validation',
+            opt.n_val_samples,
+            spatial_transform,
+            temporal_transform,
+            target_transform,
+            sample_duration=opt.sample_duration)
+    return validation_data
+
+
+# def get_test_set(opt, spatial_transform, temporal_transform, target_transform):
+#     assert opt.dataset in ['kinetics', 'activitynet', 'ucf101', 'hmdb51']
+#     assert opt.test_subset in ['val', 'test']
+
+#     if opt.test_subset == 'val':
+#         subset = 'validation'
+#     elif opt.test_subset == 'test':
+#         subset = 'testing'
+#     if opt.dataset == 'kinetics':
+#         test_data = Kinetics(
+#             opt.video_path,
+#             opt.annotation_path,
+#             subset,
+#             0,
+#             spatial_transform,
+#             temporal_transform,
+#             target_transform,
+#             sample_duration=opt.sample_duration)
+#     elif opt.dataset == 'activitynet':
+#         test_data = ActivityNet(
+#             opt.video_path,
+#             opt.annotation_path,
+#             subset,
+#             True,
+#             0,
+#             spatial_transform,
+#             temporal_transform,
+#             target_transform,
+#             sample_duration=opt.sample_duration)
+#     elif opt.dataset == 'ucf101':
+#         test_data = UCF101(
+#             opt.video_path,
+#             opt.annotation_path,
+#             subset,
+#             0,
+#             spatial_transform,
+#             temporal_transform,
+#             target_transform,
+#             sample_duration=opt.sample_duration)
+#     elif opt.dataset == 'hmdb51':
+#         test_data = HMDB51(
+#             opt.video_path,
+#             opt.annotation_path,
+#             subset,
+#             0,
+#             spatial_transform,
+#             temporal_transform,
+#             target_transform,
+#             sample_duration=opt.sample_duration)
+
+#     return test_data
