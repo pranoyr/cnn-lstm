@@ -34,11 +34,6 @@ if __name__ == "__main__":
 	use_cuda = torch.cuda.is_available()
 	device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
 
-	# Parameters
-	# params = {'batch_size': 4,
-#       'shuffle': True,
-#       'num_workers': 0}
-
 	# Datasets
 	partition, labels = load_data(opt.dataset)
 
@@ -51,9 +46,9 @@ if __name__ == "__main__":
 	train_data = UF101Dataset(partition['train'], labels, transform)
 	val_data = UF101Dataset(partition['val'], labels, transform)
 	train_loader = DataLoader(
-		train_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=train_data.my_collate)
+		train_data, batch_size=opt.batch_size, shuffle=False, num_workers=opt.num_workers, collate_fn=train_data.my_collate)
 	val_loader = DataLoader(
-		val_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=val_data.my_collate)
+		val_data, batch_size=opt.batch_size, shuffle=False, num_workers=opt.num_workers, collate_fn=val_data.my_collate)
 
 	# tensorboard
 	summary_writer = tensorboardX.SummaryWriter(log_dir='tf_logs')
