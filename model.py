@@ -52,14 +52,14 @@ class DecoderRNN(nn.Module):
         self.num_classes = num_classes
 
         self.LSTM = nn.LSTM(
-            input_size=1024,
-            hidden_size=512,
+            input_size=4096,
+            hidden_size=1024,
             num_layers=3,
             # input & output will has batch size as 1s dimension. e.g. (time_step, batch, input_size)
         )
 
-        self.fc1 = nn.Linear(512, 128)
-        self.fc2 = nn.Linear(128, self.num_classes)
+        self.fc1 = nn.Linear(1024, 1024)
+        self.fc2 = nn.Linear(1024, self.num_classes)
 
     def forward(self, x):
         """ h_n shape (n_layers, batch, hidden_size), h_c shape (n_layers, batch, hidden_size)
