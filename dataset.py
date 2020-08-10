@@ -3,7 +3,7 @@ from torch.utils import data
 from PIL import Image
 import os
 
-class Dataset(data.Dataset):
+class UF101Dataset(data.Dataset):
 	'Characterizes a dataset for PyTorch'
 	def __init__(self, list_IDs, labels, transform=None):
 		'Initialization'
