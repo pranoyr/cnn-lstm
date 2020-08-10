@@ -13,11 +13,11 @@ class EncoderCNN(nn.Module):
         modules = list(resnet.children())[:-1]      # delete the last fc layer.
         self.resnet = nn.Sequential(*modules)
 
-        self.fc1 = nn.Linear(resnet.fc.in_features, 512)
-        self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
-        self.fc2 = nn.Linear(512, 512)
-        self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
-        self.fc3 = nn.Linear(512, 300)
+        self.fc1 = nn.Linear(resnet.fc.in_features, 4096)
+        # self.bn1 = nn.BatchNorm1d(4096, momentum=0.01)
+        # self.fc2 = nn.Linear(4096, 4096)
+        # self.bn2 = nn.BatchNorm1d(4096, momentum=0.01)
+        self.fc3 = nn.Linear(4096, 1024)
 
     def forward(self, x_3d):
         cnn_embed_seq = []
@@ -25,12 +25,12 @@ class EncoderCNN(nn.Module):
             # ResNet CNN
             with torch.no_grad():
                 x = self.resnet(x_3d[:, t, :, :, :])  # ResNet
-            x = x.view(x.size(0), -1)             # flatten output of conv
+                x = x.view(x.size(0), -1)             # flatten output of conv
 
-            # FC layers
-            x = self.bn1(self.fc1(x))
-            x = F.relu(x)
-            x = self.bn2(self.fc2(x))
+            # # FC layers
+            # x = self.bn1(self.fc1(x))
+            # x = F.relu(x)
+            # x = self.bn2(self.fc2(x))
             x = F.relu(x)
             # x = F.dropout(x, p=0.2)
             x = self.fc3(x)
@@ -50,13 +50,13 @@ class DecoderRNN(nn.Module):
         self.num_classes = num_classes
 
         self.LSTM = nn.LSTM(
-            input_size=300,
-            hidden_size=256,
+            input_size=1024,
+            hidden_size=512,
             num_layers=3,
             # input & output will has batch size as 1s dimension. e.g. (time_step, batch, input_size)
         )
 
-        self.fc1 = nn.Linear(256, 128)
+        self.fc1 = nn.Linear(512, 128)
         self.fc2 = nn.Linear(128, self.num_classes)
 
     def forward(self, x):
