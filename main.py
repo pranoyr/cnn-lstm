@@ -88,14 +88,14 @@ if __name__ == "__main__":
 
 	# defining model
 	encoder_cnn = EncoderCNN().to(device)
-	rnn_decoder = DecoderRNN().to(device)
+	decoder_rnn = DecoderRNN().to(device)
 
 	# optimizer
 	# crnn_params = list(encoder_cnn.parameters()) + \
 	# 	list(decoder_rnn.parameters())
 	crnn_params = list(encoder_cnn.fc1.parameters()) + list(encoder_cnn.bn1.parameters()) + \
                   list(encoder_cnn.fc2.parameters()) + list(encoder_cnn.bn2.parameters()) + \
-                  list(encoder_cnn.fc3.parameters()) + list(rnn_decoder.parameters())
+                  list(encoder_cnn.fc3.parameters()) + list(decoder_rnn.parameters())
 	optimizer = torch.optim.Adam(crnn_params)
 
 	scheduler = lr_scheduler.ReduceLROnPlateau(
