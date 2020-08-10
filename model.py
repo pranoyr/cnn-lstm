@@ -17,7 +17,7 @@ class EncoderCNN(nn.Module):
         # self.bn1 = nn.BatchNorm1d(4096, momentum=0.01)
         # self.fc2 = nn.Linear(4096, 4096)
         # self.bn2 = nn.BatchNorm1d(4096, momentum=0.01)
-        self.fc3 = nn.Linear(4096, 1024)
+        # self.fc3 = nn.Linear(4096, 1024)
 
     def forward(self, x_3d):
         cnn_embed_seq = []
@@ -28,12 +28,14 @@ class EncoderCNN(nn.Module):
                 x = x.view(x.size(0), -1)             # flatten output of conv
 
             # # FC layers
+            x = self.fc1(x)
+
             # x = self.bn1(self.fc1(x))
             # x = F.relu(x)
             # x = self.bn2(self.fc2(x))
-            x = F.relu(x)
+            # x = F.relu(x)
             # x = F.dropout(x, p=0.2)
-            x = self.fc3(x)
+            # x = self.fc3(x)
 
             cnn_embed_seq.append(x)
 
