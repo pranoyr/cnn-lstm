@@ -8,7 +8,7 @@ import tensorboardX
 import os
 import random
 import numpy as np
-from util import AverageMeter, calculate_accuracy
+from utils import AverageMeter, calculate_accuracy
 
 def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epoch, device, log_interval):
     encoder_cnn.train()
