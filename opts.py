@@ -16,6 +16,11 @@ def parse_opts():
 		type=str,
 		help='Directory path of Videos')
 	parser.add_argument(
+        '--sample_duration',
+        default=16,
+        type=int,
+        help='Temporal duration of inputs')
+	parser.add_argument(
         '--n_val_samples',
         default=3,
         type=int,
