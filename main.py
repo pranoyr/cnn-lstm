@@ -36,8 +36,8 @@ if __name__ == "__main__":
 
 	# Parameters
 	# params = {'batch_size': 4,
-    #       'shuffle': True,
-    #       'num_workers': 0}
+#       'shuffle': True,
+#       'num_workers': 0}
 
 	# Datasets
 	partition, labels = load_data(opt.dataset)
@@ -74,7 +74,8 @@ if __name__ == "__main__":
 	# resume model, optimizer if already exists
 	if opt.resume_path:
 		checkpoint = torch.load(opt.resume_path)
-		model.load_state_dict(checkpoint['model_state_dict'])
+		encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
+		decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
 		optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 		start_epoch = checkpoint['epoch']
 		print("Model Restored from Epoch {}".format(start_epoch))
@@ -88,20 +89,20 @@ if __name__ == "__main__":
 		val_loss, val_acc = val_epoch(
 			encoder_cnn, decoder_rnn, val_loader, criterion, device)
 
-		# # saving weights to checkpoint
-		# if (epoch) % opt.save_interval == 0:
-		# 	scheduler.step(val_loss)
-		# 	# write summary
-		# 	summary_writer.add_scalar(
-		# 		'losses/train_loss', train_loss, global_step=epoch)
-		# 	summary_writer.add_scalar(
-		# 		'losses/val_loss', val_loss, global_step=epoch)
-		# 	summary_writer.add_scalar(
-		# 		'acc/train_acc', train_acc * 100, global_step=epoch)
-		# 	summary_writer.add_scalar(
-		# 		'acc/val_acc', val_acc * 100, global_step=epoch)
+		# saving weights to checkpoint
+		if (epoch) % opt.save_interval == 0:
+			scheduler.step(val_loss)
+			# write summary
+			summary_writer.add_scalar(
+				'losses/train_loss', train_loss, global_step=epoch)
+			summary_writer.add_scalar(
+				'losses/val_loss', val_loss, global_step=epoch)
+			summary_writer.add_scalar(
+				'acc/train_acc', train_acc * 100, global_step=epoch)
+			summary_writer.add_scalar(
+				'acc/val_acc', val_acc * 100, global_step=epoch)
 
-		# 	state = {'epoch': epoch + 1, 'model_state_dict': model.state_dict(),
-		# 			 'optimizer_state_dict': optimizer.state_dict()}
-		# 	torch.save(state, os.path.join('snapshots', f'model{epoch}.pth'))
-		# 	print("Epoch {} model saved!\n".format(epoch))
+			state = {'epoch': epoch + 1, 'encoder_state_dict': encoder_cnn.state_dict(),
+					 'decoder_state_dict': decoder_rnn.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
+			torch.save(state, os.path.join('snapshots', f'model{epoch}.pth'))
+			print("Epoch {} model saved!\n".format(epoch))
