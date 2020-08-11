@@ -27,7 +27,7 @@ import random
 import numpy as np
 
 
-if __name__ == "__main__":
+def main_worker():
 	opt = parse_opts()
 	print(opt)
 
@@ -43,7 +43,7 @@ if __name__ == "__main__":
 	# train loader
 	opt.mean = get_mean(opt.norm_value, dataset=opt.mean_dataset)
 	if opt.no_mean_norm and not opt.std_norm:
-    		norm_method = Normalize([0, 0, 0], [1, 1, 1])
+			norm_method = Normalize([0, 0, 0], [1, 1, 1])
 	elif not opt.std_norm:
 		norm_method = Normalize(opt.mean, [1, 1, 1])
 	else:
@@ -134,3 +134,7 @@ if __name__ == "__main__":
 					 'decoder_state_dict': decoder_rnn.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
 			torch.save(state, os.path.join('snapshots', f'model{epoch}.pth'))
 			print("Epoch {} model saved!\n".format(epoch))
+
+		
+if __name__ == "__main__":
+    main_worker
