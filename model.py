@@ -23,8 +23,8 @@ class EncoderCNN(nn.Module):
         cnn_embed_seq = []
         for t in range(x_3d.size(1)):
             # ResNet CNN
-            with torch.no_grad():
-                x = self.resnet(x_3d[:, t, :, :, :])  # ResNet
+            # with torch.no_grad():
+            x = self.resnet(x_3d[:, t, :, :, :])  # ResNet
             x = x.view(x.size(0), -1)             # flatten output of conv
 
             # FC layers
