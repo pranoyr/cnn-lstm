@@ -29,7 +29,7 @@ def resume_model(opt, encoder_cnn, decoder_rnn, optimizer):
 	encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
 	decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
 	optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-	start_epoch = checkpoint['epoch']
+	start_epoch = checkpoint['epoch'] + 1
 	print("Model Restored from Epoch {}".format(start_epoch))
 	return start_epoch
 
@@ -136,7 +136,7 @@ def main_worker():
 			summary_writer.add_scalar(
 				'acc/val_acc', val_acc * 100, global_step=epoch)
 
-			state = {'epoch': epoch + 1, 'encoder_state_dict': encoder_cnn.state_dict(),
+			state = {'epoch': epoch, 'encoder_state_dict': encoder_cnn.state_dict(),
 					 'decoder_state_dict': decoder_rnn.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
 			torch.save(state, os.path.join('snapshots', f'model{epoch}.pth'))
 			print("Epoch {} model saved!\n".format(epoch))
