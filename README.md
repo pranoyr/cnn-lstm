@@ -5,7 +5,7 @@ Implementation of CNN+LSTM in Pytorch for Video Classification
 ### Prerequisites
 * PyTorch (ver. 0.4+ required)
 * FFmpeg, FFprobe
-*  Python 3
+* Python 3
 
 ### Train
 
