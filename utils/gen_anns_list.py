@@ -59,6 +59,7 @@ for i,j in zip(X_test,y_test):
 	with open(os.path.join(abs_path,'testlist01.txt'),'a') as f:
 		f.write(i)
 		f.write('\n')
+
 os.system("mv ./data/classInd.txt ./data/annotation/")
 os.system("mv ./data/testlist01.txt ./data/annotation/")
 os.system("mv ./data/trainlist01.txt ./data/annotation/")
