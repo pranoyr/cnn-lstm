@@ -1,7 +1,9 @@
 import os 
 from sklearn.model_selection import train_test_split
-
-
+# import argparse
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--data', type=str, default='./video_action_recognition', help='path to dataset')
+# opt = parser.parse_args()
 image_folder="./data/video_data"
 abs_path=os.path.dirname(os.path.abspath(image_folder))
 
@@ -14,7 +16,7 @@ open(os.path.join(abs_path,'trainval.txt'),'w').write("")
 # updates labels.txt 
 # fight 0
 # noFight 1
-labels=os.listdir(os.path.join(abs_path,image_folder))
+labels=os.listdir(os.path.join(abs_path,"video_data"))
 for i,label in enumerate(labels):
 	with open(os.path.join(abs_path,'classInd.txt'),'a') as f:
 		f.write(str(i)+" "+label)
@@ -29,7 +31,7 @@ for i in c[:len(c)-1]:
 
 # generating trainval.txt 
 for i,label in enumerate(labels):
-	vid_names=os.listdir(os.path.join(abs_path,image_folder,label))
+	vid_names=os.listdir(os.path.join(abs_path,"video_data",label))
 	for video_name in vid_names:
 		with open(os.path.join(abs_path,'trainval.txt'),'a') as f:
 			f.write(os.path.join(label,video_name)+ " " + dict_labels[label])
@@ -59,8 +61,16 @@ for i,j in zip(X_test,y_test):
 	with open(os.path.join(abs_path,'testlist01.txt'),'a') as f:
 		f.write(i)
 		f.write('\n')
-
 os.system("mv ./data/classInd.txt ./data/annotation/")
 os.system("mv ./data/testlist01.txt ./data/annotation/")
 os.system("mv ./data/trainlist01.txt ./data/annotation/")
 os.system("rm ./data/trainval.txt")
+
+# # generating train.txt 
+# for i,label in enumerate(labels):
+#     video_names=os.listdir(os.path.join(abs_path,image_folder,'val',label))
+#     for video_name in video_names:
+#         with open(os.path.join(abs_path,'val.txt'),'a') as f:
+#             f.write(os.path.join(abs_path,image_folder,'val',label,video_name)+ " " + dict_labels[label])
+#             f.write('\n')
+

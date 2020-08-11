@@ -1,2 +1,2 @@
-0 Bowling
-1 BaseballPitch
+0 running
+1 ApplyEyeMakeup
