@@ -13,7 +13,6 @@ from opts import parse_opts
 from model import generate_model
 from torch.optim import lr_scheduler
 from dataset import get_training_set, get_validation_set
-from model import EncoderCNN, DecoderRNN
 from mean import get_mean, get_std
 from spatial_transforms import (
 	Compose, Normalize, Scale, CenterCrop, CornerCrop, MultiScaleCornerCrop,
