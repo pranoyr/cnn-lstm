@@ -1,3 +1,11 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import tensorboardX
+import os
+import random
+import numpy as np
+
 from train import train_epoch
 from torch.utils.data import DataLoader
 from validation import val_epoch
@@ -13,21 +21,22 @@ from temporal_transforms import LoopPadding, TemporalRandomCrop
 from target_transforms import ClassLabel, VideoID
 from target_transforms import Compose as TargetCompose
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import torchvision
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
-import argparse
-import tensorboardX
-import os
-import random
-import numpy as np
+
+def resume_model(opt, encoder_cnn, decoder_rnn, optimizer):
+    """ Resume model 
+    """
+    checkpoint = torch.load(opt.resume_path)
+    encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
+    decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    start_epoch = checkpoint['epoch']
+    print("Model Restored from Epoch {}".format(start_epoch))
+    return start_epoch
 
 
 def get_loaders(opt):
+    """ Make dataloaders for train and validation sets
+    """
     # train loader
     opt.mean = get_mean(opt.norm_value, dataset=opt.mean_dataset)
     if opt.no_mean_norm and not opt.std_norm:
@@ -82,7 +91,6 @@ def main_worker():
     torch.manual_seed(seed)
 
     # CUDA for PyTorch
-    use_cuda = torch.cuda.is_available()
     device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
 
     # tensorboard
@@ -103,14 +111,9 @@ def main_worker():
     # 	optimizer, 'min', patience=opt.lr_patience)
     criterion = nn.CrossEntropyLoss()
 
-    # resume model, optimizer if already exists
+    # resume model
     if opt.resume_path:
-        checkpoint = torch.load(opt.resume_path)
-        encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
-        decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        start_epoch = checkpoint['epoch']
-        print("Model Restored from Epoch {}".format(start_epoch))
+        start_epoch = resume_model(opt, encoder_cnn, decoder_rnn, optimizer)
     else:
         start_epoch = 1
 
