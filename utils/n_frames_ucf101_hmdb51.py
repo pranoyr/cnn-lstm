@@ -28,7 +28,7 @@ def class_process(dir_path, class_name):
 
 
 if __name__=="__main__":
-  dir_path = './image_data'
+  dir_path = './data/image_data'
   for class_name in os.listdir(dir_path):
     class_process(dir_path, class_name)
 
