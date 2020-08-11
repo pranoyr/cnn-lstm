@@ -1,5 +1,5 @@
 # CNN+LSTM Video Classification
-Implementation of CNN+LSTM in Pytorch for Video Classification
+Implementation of CNN LSTM in Pytorch for Video Classification
 
 ## Getting Started
 ### Prerequisites
@@ -7,7 +7,12 @@ Implementation of CNN+LSTM in Pytorch for Video Classification
 * FFmpeg, FFprobe
 * Python 3
 
-### Train
+
+### Download the UCF101 Dataset
+https://www.crcv.ucf.edu/research/data-sets/ucf101/
+
+
+## If you have your own dataset try -->
 
 ```
 mkdir data
@@ -32,6 +37,7 @@ Generate Images from the Video dataset
 ./utils/generate_data.sh
 ```
 
+### Train
 Once you have created the dataset, start training ->
 ```
 python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0  --annotation_path ./data/annotation/ucf101_01.json --video_path ./data/image_data/  --dataset ucf101 --sample_size 150
