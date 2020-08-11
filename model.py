@@ -28,6 +28,7 @@ class EncoderCNN(nn.Module):
             x = x.view(x.size(0), -1)             # flatten output of conv
 
             # FC layers
+            print(x.shape)
             x = self.bn1(self.fc1(x))
             x = F.relu(x)
             x = self.bn2(self.fc2(x))
