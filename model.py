@@ -12,4 +12,5 @@ def generate_model(opt):
 		encoder, decoder = cnnlstm.EncoderCNN(), cnnlstm.DecoderRNN()
 	elif opt.model == 'cnnlstm_attn':
 		encoder, decoder = cnnlstm_attention.EncoderAttnCNN(), cnnlstm_attention.DecoderRNN()
-	return encoder, decoder
+
+	return encoder.to(opt.device), decoder.to(opt.device)
