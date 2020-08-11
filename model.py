@@ -14,9 +14,9 @@ class EncoderCNN(nn.Module):
         self.resnet = nn.Sequential(*modules)
 
         self.fc1 = nn.Linear(resnet.fc.in_features, 512)
-        self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
+        # self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
         self.fc2 = nn.Linear(512, 512)
-        self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
+        # self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
         self.fc3 = nn.Linear(512, 300)
 
     def forward(self, x_3d):
@@ -29,9 +29,9 @@ class EncoderCNN(nn.Module):
 
             # FC layers
             print(x.shape)
-            x = self.bn1(self.fc1(x))
+            x = self.fc1(x)
             x = F.relu(x)
-            x = self.bn2(self.fc2(x))
+            x = self.fc2(x)
             x = F.relu(x)
             # x = F.dropout(x, p=0.2)
             x = self.fc3(x)
