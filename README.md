@@ -27,7 +27,7 @@ It should be in this form --
 
 Generate Images from the Video dataset
 ```
-python3 utils/generate_data.sh
+./utils/generate_data.sh
 ```
 
 Once you have created the dataset, start training ->
