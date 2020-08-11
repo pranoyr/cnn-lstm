@@ -3,17 +3,20 @@ import torch.nn as nn
 import torchvision.models as models
 from torch.nn.utils.rnn import pack_padded_sequence
 import torch.nn.functional as F
+from torchvision.models import resnet18, resnet101
 
 
 class EncoderCNN(nn.Module):
     def __init__(self):
         """Load the pretrained ResNet-152 and replace top fc layer."""
         super(EncoderCNN, self).__init__()
-        resnet = models.resnet101(pretrained=True)
-        modules = list(resnet.children())[:-1]      # delete the last fc layer.
-        self.resnet = nn.Sequential(*modules)
+        # resnet = models.resnet101(pretrained=True)
+        # modules = list(resnet.children())[:-1]      # delete the last fc layer.
+        # self.resnet = nn.Sequential(*modules)
+        self.resnet = resnet101(pretrained=True)
+        self.resnet.fc = nn.Sequential(nn.Linear(self.resnet.fc.in_features, 300))
 
-        self.fc1 = nn.Linear(resnet.fc.in_features, 300)
+        # self.fc1 = nn.Linear(resnet.fc.in_features, 300)
         # self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
         # self.fc2 = nn.Linear(512, 512)
         # self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
@@ -28,7 +31,7 @@ class EncoderCNN(nn.Module):
             x = x.view(x.size(0), -1)             # flatten output of conv
 
             # FC layers
-            x = self.fc1(x)
+            # x = self.fc1(x)
             # x = F.relu(x)
             # x = self.fc2(x)
             # x = F.relu(x)
