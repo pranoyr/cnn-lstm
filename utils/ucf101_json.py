@@ -50,7 +50,7 @@ def convert_ucf101_csv_to_activitynet_json(label_csv_path, train_csv_path,
         json.dump(dst_data, dst_file)
 
 if __name__ == '__main__':
-    csv_dir_path = './annotation'
+    csv_dir_path = './data/annotation'
 
     for split_index in range(1, 2):
         label_csv_path = os.path.join(csv_dir_path, 'classInd.txt')
