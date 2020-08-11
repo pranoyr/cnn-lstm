@@ -12,7 +12,7 @@ Implementation of CNN LSTM in Pytorch for Video Classification
 https://www.crcv.ucf.edu/research/data-sets/ucf101/
 
 
-## If you have your own dataset try -->
+## Try on your own dataset 
 
 ```
 mkdir data
