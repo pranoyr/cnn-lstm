@@ -29,8 +29,8 @@ def resume_model(opt, encoder_cnn, decoder_rnn, optimizer):
 	encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
 	decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
 	optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+	print("Model Restored from Epoch {}".format(checkpoint['epoch']))
 	start_epoch = checkpoint['epoch'] + 1
-	print("Model Restored from Epoch {}".format(start_epoch))
 	return start_epoch
 
 
