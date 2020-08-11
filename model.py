@@ -13,11 +13,11 @@ class EncoderCNN(nn.Module):
         modules = list(resnet.children())[:-1]      # delete the last fc layer.
         self.resnet = nn.Sequential(*modules)
 
-        self.fc1 = nn.Linear(resnet.fc.in_features, 512)
+        self.fc1 = nn.Linear(resnet.fc.in_features, 300)
         # self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
-        self.fc2 = nn.Linear(512, 512)
+        # self.fc2 = nn.Linear(512, 512)
         # self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
-        self.fc3 = nn.Linear(512, 300)
+        # self.fc3 = nn.Linear(512, 300)
 
     def forward(self, x_3d):
         cnn_embed_seq = []
@@ -28,13 +28,12 @@ class EncoderCNN(nn.Module):
             x = x.view(x.size(0), -1)             # flatten output of conv
 
             # FC layers
-            print(x.shape)
             x = self.fc1(x)
-            x = F.relu(x)
-            x = self.fc2(x)
-            x = F.relu(x)
+            # x = F.relu(x)
+            # x = self.fc2(x)
+            # x = F.relu(x)
             # x = F.dropout(x, p=0.2)
-            x = self.fc3(x)
+            # x = self.fc3(x)
 
             cnn_embed_seq.append(x)
 
