@@ -50,6 +50,12 @@ def parse_opts():
 		type=int,
 		help='Model saving interval')
 	parser.add_argument(
+        '--model',
+        default='cnnlstm',
+        type=str,
+        help=
+        '(cnnlstm | cnnlstm_attn |')
+	parser.add_argument(
 		'--lr_rate',
 		default=0.1,
 		type=float,
