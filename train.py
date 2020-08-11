@@ -10,7 +10,7 @@ import random
 import numpy as np
 from utils import AverageMeter, calculate_accuracy
 
-def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epoch, opt):
+def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epoch, log_interval, device):
     encoder_cnn.train()
     decoder_rnn.train()
  
@@ -18,7 +18,7 @@ def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epo
     losses = AverageMeter()
     accuracies = AverageMeter()
     for batch_idx, (data, targets) in enumerate(data_loader):
-        data, targets = data.to(opt.device), targets.to(opt.device)
+        data, targets = data.to(device), targets.to(device)
         out_cnn = encoder_cnn(data)
         outputs = decoder_rnn(out_cnn)
 
@@ -33,8 +33,8 @@ def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epo
         loss.backward()
         optimizer.step()
 
-        if (batch_idx + 1) % opt.log_interval == 0:
-            avg_loss = train_loss / opt.log_interval
+        if (batch_idx + 1) % log_interval == 0:
+            avg_loss = train_loss / log_interval
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, (batch_idx + 1) * len(data), len(data_loader.dataset), 100. * (batch_idx + 1) / len(data_loader), avg_loss))
             train_loss = 0.0

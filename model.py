@@ -3,7 +3,7 @@ from torch import nn
 
 from models import cnnlstm, cnnlstm_attention
 
-def generate_model(opt):
+def generate_model(opt, device):
 	assert opt.model in [
 		'cnnlstm', 'cnnlstm_attn'
 	]
@@ -13,4 +13,4 @@ def generate_model(opt):
 	elif opt.model == 'cnnlstm_attn':
 		encoder, decoder = cnnlstm_attention.EncoderAttnCNN(), cnnlstm_attention.DecoderRNN()
 
-	return encoder.to(opt.device), decoder.to(opt.device)
+	return encoder.to(device), decoder.to(device)

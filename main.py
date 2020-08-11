@@ -91,13 +91,13 @@ def main_worker():
 	torch.manual_seed(seed)
 
 	# CUDA for PyTorch
-	opt.device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
+	device = torch.device(f"cuda:{opt.gpu}" if opt.use_cuda else "cpu")
 
 	# tensorboard
 	summary_writer = tensorboardX.SummaryWriter(log_dir='tf_logs')
 
 	# defining model
-	encoder_cnn, decoder_rnn =  generate_model(opt)
+	encoder_cnn, decoder_rnn =  generate_model(opt, device)
 	# get data loaders
 	train_loader, val_loader = get_loaders(opt)
 
@@ -119,9 +119,9 @@ def main_worker():
 	# start training
 	for epoch in range(start_epoch, opt.n_epochs + 1):
 		train_loss, train_acc = train_epoch(
-			encoder_cnn, decoder_rnn, train_loader, criterion, optimizer, epoch, opt)
+			encoder_cnn, decoder_rnn, train_loader, criterion, optimizer, epoch, opt.log_interval, device)
 		val_loss, val_acc = val_epoch(
-			encoder_cnn, decoder_rnn, val_loader, criterion, opt)
+			encoder_cnn, decoder_rnn, val_loader, criterion, device)
 
 		# saving weights to checkpoint
 		if (epoch) % opt.save_interval == 0:
