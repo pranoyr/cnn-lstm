@@ -1,5 +1,5 @@
 # CNN LSTM Video Classification
-Implementation of CNN LSTM in Pytorch for Video Classification
+Implementation of Attention based CNN LSTM Architevure with Resnet backend for Video Classification
 
 ## Getting Started
 ### Prerequisites
