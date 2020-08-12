@@ -138,7 +138,7 @@ def main_worker():
 
 			state = {'epoch': epoch, 'encoder_state_dict': encoder_cnn.state_dict(),
 					 'decoder_state_dict': decoder_rnn.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
-			torch.save(state, os.path.join('snapshots', f'model{epoch}.pth'))
+			torch.save(state, os.path.join('snapshots', f'{opt.model}-Epoch-{epoch}-Loss-{val_loss}.pth'))
 			print("Epoch {} model saved!\n".format(epoch))
 
 
