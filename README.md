@@ -49,7 +49,7 @@ python main.py --model cnnlstm_attn --use_cuda --gpu 0 --batch_size 32 --n_epoch
 ```
 
 Also specifiy 
---num classes <num_classes>
+--n_classes <num_classes>
 
 
 ## License
