@@ -57,7 +57,7 @@ def parse_opts():
         '(cnnlstm | cnnlstm_attn |')
 	parser.add_argument(
 		'--lr_rate',
-		default=0.1,
+		default=1e-3,
 		type=float,
 		help='Initial learning rate (divided by 10 while training by lr scheduler)')
 	parser.add_argument('--momentum', default=0.9, type=float, help='Momentum')
