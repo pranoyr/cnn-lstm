@@ -49,7 +49,7 @@ python main.py --model cnnlstm_attn --n_classes 4 --use_cuda --gpu 0 --batch_siz
 ```
 
 Also specifiy 
---n_classes <num_classes>. num_classese = Number of labels in your dataset.
+--n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
 
 ## License
