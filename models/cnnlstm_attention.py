@@ -16,9 +16,9 @@ class EncoderAttnCNN(nn.Module):
     def forward(self, x_3d):
         cnn_embed_seq = []
         for t in range(x_3d.size(1)):
-            # with torch.no_grad():
-            x = self.resnet(x_3d[:, t, :, :, :]) 
-            x = x.view(x.size(0), -1) 
+            with torch.no_grad():
+                x = self.resnet(x_3d[:, t, :, :, :]) 
+                x = x.view(x.size(0), -1) 
 
             attn_weights = F.sigmoid(self.attn(x))  
             attn_applied = attn_weights * x      
