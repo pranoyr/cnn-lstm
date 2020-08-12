@@ -44,9 +44,6 @@ hidden = torch.Tensor([[11,11,11,11,11],
                       [1,2,3,4,5]])
 print(hidden)
 
-
-
 res = torch.dot(hidden, hidden)
 
 print(res)
-
