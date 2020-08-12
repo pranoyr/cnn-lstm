@@ -104,7 +104,7 @@ def main_worker():
 	# optimizer
 	crnn_params = list(encoder_cnn.parameters()) + \
 		list(decoder_rnn.parameters())
-	optimizer = torch.optim.Adam(crnn_params, lr=opt.lr_rate)
+	optimizer = torch.optim.Adam(crnn_params, lr=opt.lr_rate, weight_decay=opt.weight_decay)
 
 	# scheduler = lr_scheduler.ReduceLROnPlateau(
 	# 	optimizer, 'min', patience=opt.lr_patience)
