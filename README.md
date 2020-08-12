@@ -51,6 +51,9 @@ python main.py --model cnnlstm_attn --n_classes 4 --use_cuda --gpu 0 --batch_siz
 Also specifiy 
 --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
+## References
+* https://github.com/kenshohara/video-classification-3d-cnn-pytorch
+* https://github.com/HHTseng/video-classification
 
 ## License
 This project is licensed under the MIT License 
