@@ -45,7 +45,7 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 
 With Attention
 ```
-python main.py --model cnnlstm_attn --use_cuda --gpu 0 --batch_size 32 --n_epochs 100 --num_workers 0  --annotation_path ./data/annotation/ucf101_01.json --video_path ./data/image_data/  --dataset ucf101 --sample_size 150 --lr_rate 1e-4
+python main.py --model cnnlstm_attn --n_classes 4 --use_cuda --gpu 0 --batch_size 32 --n_epochs 100 --num_workers 0  --annotation_path ./data/annotation/ucf101_01.json --video_path ./data/image_data/  --dataset ucf101 --sample_size 150 --lr_rate 1e-4
 ```
 
 Also specifiy 
