@@ -19,10 +19,10 @@ class EncoderAttnCNN(nn.Module):
             with torch.no_grad():
                 x = self.resnet(x_3d[:, t, :, :, :]) 
                 x = x.view(x.size(0), -1) 
-            attn_weights = F.softmax(self.attn(x), dim=1)  
+            attn_weights = torch.sigmoid(self.attn(x))  
             attn_applied = attn_weights * x      
             cnn_embed_seq.append(attn_applied)
-            
+
         cnn_embed_seq = torch.stack(cnn_embed_seq, dim=0)
         return cnn_embed_seq
 
