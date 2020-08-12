@@ -20,7 +20,7 @@ class EncoderAttnCNN(nn.Module):
                 x = self.resnet(x_3d[:, t, :, :, :]) 
                 x = x.view(x.size(0), -1) 
 
-            attn_weights = F.softmax(self.attn(x))  
+            attn_weights = F.softmax(self.attn(x), dim=1)  
             attn_applied = attn_weights * x      
             cnn_embed_seq.append(attn_applied)
 
