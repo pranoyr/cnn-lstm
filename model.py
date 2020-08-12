@@ -9,8 +9,8 @@ def generate_model(opt, device):
 	]
 
 	if opt.model == 'cnnlstm':
-		encoder, decoder = cnnlstm.EncoderCNN(), cnnlstm.DecoderRNN()
+		encoder, decoder = cnnlstm.EncoderCNN(), cnnlstm.DecoderRNN(num_classes=opt.n_classes)
 	elif opt.model == 'cnnlstm_attn':
-		encoder, decoder = cnnlstm_attention.EncoderAttnCNN(), cnnlstm_attention.DecoderRNN()
+		encoder, decoder = cnnlstm_attention.EncoderAttnCNN(), cnnlstm_attention.DecoderRNN(num_classes=opt.n_classes)
 
 	return encoder.to(device), decoder.to(device)

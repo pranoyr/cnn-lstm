@@ -56,6 +56,13 @@ def parse_opts():
         help=
         '(cnnlstm | cnnlstm_attn |')
 	parser.add_argument(
+        '--n_classes',
+        default=400,
+        type=int,
+        help=
+        'Number of classes (activitynet: 200, kinetics: 400 or 600, ucf101: 101, hmdb51: 51)'
+    )
+	parser.add_argument(
 		'--lr_rate',
 		default=1e-3,
 		type=float,
