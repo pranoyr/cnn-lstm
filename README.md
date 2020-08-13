@@ -47,6 +47,9 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 Also specifiy 
 --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
+## Tensorboard grapgh
+![alt text](./images/Screenshot 2020-08-13 at 5.54.36 PM.png)
+
 ## References
 * https://github.com/kenshohara/video-classification-3d-cnn-pytorch
 * https://github.com/HHTseng/video-classification
