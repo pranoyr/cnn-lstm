@@ -1,1 +1,1 @@
-This Folder will save all the weights while training.
+This folder will save all the weights while training.
