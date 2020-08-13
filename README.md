@@ -9,7 +9,7 @@ Implementation of CNN LSTM with Resnet backend for Video Classification
 * Python 3
 
 
-## Try on your own dataset 
+### Try on your own dataset 
 
 ```
 mkdir data
