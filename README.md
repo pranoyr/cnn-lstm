@@ -47,8 +47,8 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 Also specifiy 
 --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
-## Tensorboard grapgh
-![alt text](https://github.com/[pranoyr/[cnnlstm]/blob/[branch]/image.jpg?raw=true)(./images/Screenshot 2020-08-13 at 5.54.36 PM.png)
+## Tensorboard Visualisation
+![alt text](https://github.com/pranoyr/cnn-lstm/blob/master/images/Screenshot%202020-08-13%20at%205.54.36%20PM.png)
 
 ## References
 * https://github.com/kenshohara/video-classification-3d-cnn-pytorch
