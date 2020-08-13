@@ -41,7 +41,7 @@ Generate Images from the Video dataset
 ### Train
 Once you have created the dataset, start training ->
 ```
-python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0  --annotation_path ./data/annotation/ucf101_01.json --video_path ./data/image_data/  --dataset ucf101 --sample_size 150 --lr_rate 1e-4 --n_classes 4
+python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0  --annotation_path ./data/annotation/ucf101_01.json --video_path ./data/image_data/  --dataset ucf101 --sample_size 150 --lr_rate 1e-4 --n_classes <num_classes>
 ```
 
 Also specifiy 
@@ -53,7 +53,7 @@ Also specifiy
 
 ## Inference
 ```
-python inference.py  --annotation_path ./data/annotation/ucf101_01.json  --dataset ucf101 --model cnnlstm --n_classes 4 --resume_path <path-to-model.pth> 
+python inference.py  --annotation_path ./data/annotation/ucf101_01.json  --dataset ucf101 --model cnnlstm --n_classes <num_classes> --resume_path <path-to-model.pth> 
 ```
 
 ## References
