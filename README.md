@@ -50,6 +50,12 @@ Also specifiy
 ## Tensorboard Visualisation
 ![alt text](https://github.com/pranoyr/cnn-lstm/blob/master/images/Screenshot%202020-08-13%20at%205.54.36%20PM.png)
 
+
+## Inference
+```
+python predict.py  --annotation_path ./data/annotation/ucf101_01.json  --dataset ucf101 --model cnnlstm --n_classes 4 --resume_path <path-to-model.pth> 
+```
+
 ## References
 * https://github.com/kenshohara/video-classification-3d-cnn-pytorch
 * https://github.com/HHTseng/video-classification
