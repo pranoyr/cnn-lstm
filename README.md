@@ -41,9 +41,9 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 ```
 
 Also specifiy 
---n_classes <num_classes>. num_classes = Number of labels in your dataset.
+* --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
-All the weights will be saved to the snapshots folder 
+* All the weights will be saved to the snapshots folder 
 * To resume Training from any checkpoint, Use
 --resume_path <path-to-model>
 
