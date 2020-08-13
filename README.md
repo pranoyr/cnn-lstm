@@ -9,10 +9,6 @@ Implementation of CNN LSTM with Resnet backend for Video Classification
 * Python 3
 
 
-### Download the UCF101 Dataset
-https://www.crcv.ucf.edu/research/data-sets/ucf101/
-
-
 ## Try on your own dataset 
 
 ```
