@@ -45,7 +45,7 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 
 * All the weights will be saved to the snapshots folder 
 * To resume Training from any checkpoint, Use
---resume_path <path-to-model>
+--resume_path <path-to-model> .
 
 
 ## Tensorboard Visualisation(Training for 4 labels from UCF-101 Dataset)
