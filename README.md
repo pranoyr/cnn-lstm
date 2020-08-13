@@ -43,6 +43,9 @@ python main.py --use_cuda --gpu 0 --batch_size 8 --n_epochs 100 --num_workers 0 
 Also specifiy 
 --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
+All the weights will be saved to the snapshots folder 
+
+
 ## Tensorboard Visualisation(Training for 4 labels from UCF-101 Dataset)
 ![alt text](https://github.com/pranoyr/cnn-lstm/blob/master/images/Screenshot%202020-08-13%20at%205.54.36%20PM.png)
 
