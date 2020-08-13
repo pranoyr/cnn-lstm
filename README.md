@@ -53,7 +53,7 @@ Also specifiy
 
 ## Inference
 ```
-python predict.py  --annotation_path ./data/annotation/ucf101_01.json  --dataset ucf101 --model cnnlstm --n_classes 4 --resume_path <path-to-model.pth> 
+python inference.py  --annotation_path ./data/annotation/ucf101_01.json  --dataset ucf101 --model cnnlstm --n_classes 4 --resume_path <path-to-model.pth> 
 ```
 
 ## References
