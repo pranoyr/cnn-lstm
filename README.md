@@ -44,6 +44,8 @@ Also specifiy
 --n_classes <num_classes>. num_classes = Number of labels in your dataset.
 
 All the weights will be saved to the snapshots folder 
+* To resume Training from any checkpoint, Use
+--resume_path <path-to-model>
 
 
 ## Tensorboard Visualisation(Training for 4 labels from UCF-101 Dataset)
