@@ -9,5 +9,5 @@ def generate_model(opt, device):
 	]
 
 	if opt.model == 'cnnlstm':
-		model = cnnlstm.CNNLSTM()
+		model = cnnlstm.CNNLSTM(num_classes=opt.num_classes)
 	return model.to(device)
