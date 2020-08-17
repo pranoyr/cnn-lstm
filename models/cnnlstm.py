@@ -6,42 +6,23 @@ import torch.nn.functional as F
 from torchvision.models import resnet18, resnet101
 
 
-class EncoderCNN(nn.Module):
+class CNNLSTM(nn.Module):
     def __init__(self):
         """Load the pretrained ResNet-152 and replace top fc layer."""
-        super(EncoderCNN, self).__init__()
-        # resnet = models.resnet101(pretrained=True)
-        # modules = list(resnet.children())[:-1]      # delete the last fc layer.
-        # self.resnet = nn.Sequential(*modules)
+        super(CNNLSTM, self).__init__()
         self.resnet = resnet101(pretrained=True)
         self.resnet.fc = nn.Sequential(nn.Linear(self.resnet.fc.in_features, 300))
-        # self.fc1 = nn.Linear(resnet.fc.in_features, 300)
-        # self.bn1 = nn.BatchNorm1d(512, momentum=0.01)
-        # self.fc2 = nn.Linear(512, 512)
-        # self.bn2 = nn.BatchNorm1d(512, momentum=0.01)
-        # self.fc3 = nn.Linear(512, 300)
-
+        self.lstm = nn.LSTM(input_size=300, hidden_size=256, num_layers=3)
+       
     def forward(self, x_3d):
         cnn_embed_seq = []
         for t in range(x_3d.size(1)):
-            # ResNet CNN
             with torch.no_grad():
-                x = self.resnet(x_3d[:, t, :, :, :])  # ResNet
-                x = x.view(x.size(0), -1)             # flatten output of conv
+                x = self.resnet(x_3d[:, t, :, :, :])  
+                x = x.view(x.size(0), -1).unsqueeze(0)
+                out, hidden = self.lstm(x, hidden)         
 
-            # FC layers
-            # x = self.fc1(x)
-            # x = F.relu(x)
-            # x = self.fc2(x)
-            # x = F.relu(x)
-            # x = F.dropout(x, p=0.2)
-            # x = self.fc3(x)
-
-            cnn_embed_seq.append(x)
-
-        # swap time and sample dim such that (sample dim, time dim, CNN latent dim)
-        cnn_embed_seq = torch.stack(cnn_embed_seq, dim=0)
-        # cnn_embed_seq: shape=(time_step, batch, input_size)
+     
 
         return cnn_embed_seq
 
