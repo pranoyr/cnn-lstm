@@ -20,7 +20,7 @@ class CNNLSTM(nn.Module):
         for t in range(x_3d.size(1)):
             with torch.no_grad():
                 x = self.resnet(x_3d[:, t, :, :, :])  
-                out, hidden = self.lstm(x.unsqueeze(0), hidden)         
+            out, hidden = self.lstm(x.unsqueeze(0), hidden)         
 
         x = self.fc1(out[-1, :, :])
         x = F.relu(x)
