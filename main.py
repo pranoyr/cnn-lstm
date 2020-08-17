@@ -22,12 +22,11 @@ from target_transforms import ClassLabel, VideoID
 from target_transforms import Compose as TargetCompose
 
 
-def resume_model(opt, encoder_cnn, decoder_rnn, optimizer):
+def resume_model(opt, model, optimizer):
 	""" Resume model 
 	"""
 	checkpoint = torch.load(opt.resume_path)
-	encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
-	decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
+	model.load_state_dict(checkpoint['state_dict'])
 	optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 	print("Model Restored from Epoch {}".format(checkpoint['epoch']))
 	start_epoch = checkpoint['epoch'] + 1
