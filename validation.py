@@ -11,17 +11,15 @@ import numpy as np
 from utils import AverageMeter, calculate_accuracy
 
 
-def val_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, device):
-    encoder_cnn.eval()
-    decoder_rnn.eval()
+def val_epoch(model, data_loader, criterion, device):
+    model.eval()
 
     losses = AverageMeter()
     accuracies = AverageMeter()
     with torch.no_grad():
         for (data, targets) in data_loader:
             data, targets = data.to(device), targets.to(device)
-            out_cnn = encoder_cnn(data)
-            outputs = decoder_rnn(out_cnn)  
+            outputs = model(data)  
 
             loss = criterion(outputs, targets)
             acc = calculate_accuracy(outputs, targets)
