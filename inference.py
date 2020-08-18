@@ -85,7 +85,7 @@ if __name__ == "__main__":
         cam = cv2.VideoCapture(
             '/Users/pranoyr/Desktop/v_CricketBowling_g11_c07.avi')
         clip = []
-        i = 0
+        frame_count = 0
         while True:
             ret, img = cam.read()
             if frame_count == 16:
