@@ -83,7 +83,7 @@ if __name__ == "__main__":
         model.eval()
 
         cam = cv2.VideoCapture(
-            '/Users/pranoyr/Desktop/v_CricketBowling_g11_c07.avi')
+            '/Users/pranoyr/Desktop/v_CricketShot_g11_c05.avi')
         clip = []
         frame_count = 0
         while True:
