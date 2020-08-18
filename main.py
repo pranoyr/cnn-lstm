@@ -22,12 +22,11 @@ from target_transforms import ClassLabel, VideoID
 from target_transforms import Compose as TargetCompose
 
 
-def resume_model(opt, encoder_cnn, decoder_rnn, optimizer):
+def resume_model(opt, model, optimizer):
 	""" Resume model 
 	"""
 	checkpoint = torch.load(opt.resume_path)
-	encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
-	decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
+	model.load_state_dict(checkpoint['state_dict'])
 	optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 	print("Model Restored from Epoch {}".format(checkpoint['epoch']))
 	start_epoch = checkpoint['epoch'] + 1
@@ -97,13 +96,12 @@ def main_worker():
 	summary_writer = tensorboardX.SummaryWriter(log_dir='tf_logs')
 
 	# defining model
-	encoder_cnn, decoder_rnn =  generate_model(opt, device)
+	model =  generate_model(opt, device)
 	# get data loaders
 	train_loader, val_loader = get_loaders(opt)
 
 	# optimizer
-	crnn_params = list(encoder_cnn.parameters()) + \
-		list(decoder_rnn.parameters())
+	crnn_params = list(model.parameters())
 	optimizer = torch.optim.Adam(crnn_params, lr=opt.lr_rate, weight_decay=opt.weight_decay)
 
 	# scheduler = lr_scheduler.ReduceLROnPlateau(
@@ -112,16 +110,16 @@ def main_worker():
 
 	# resume model
 	if opt.resume_path:
-		start_epoch = resume_model(opt, encoder_cnn, decoder_rnn, optimizer)
+		start_epoch = resume_model(opt, model, optimizer)
 	else:
 		start_epoch = 1
 
 	# start training
 	for epoch in range(start_epoch, opt.n_epochs + 1):
 		train_loss, train_acc = train_epoch(
-			encoder_cnn, decoder_rnn, train_loader, criterion, optimizer, epoch, opt.log_interval, device)
+			model, train_loader, criterion, optimizer, epoch, opt.log_interval, device)
 		val_loss, val_acc = val_epoch(
-			encoder_cnn, decoder_rnn, val_loader, criterion, device)
+			model, val_loader, criterion, device)
 
 		# saving weights to checkpoint
 		if (epoch) % opt.save_interval == 0:
@@ -136,8 +134,7 @@ def main_worker():
 			summary_writer.add_scalar(
 				'acc/val_acc', val_acc * 100, global_step=epoch)
 
-			state = {'epoch': epoch, 'encoder_state_dict': encoder_cnn.state_dict(),
-					 'decoder_state_dict': decoder_rnn.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
+			state = {'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
 			torch.save(state, os.path.join('snapshots', f'{opt.model}-Epoch-{epoch}-Loss-{val_loss}.pth'))
 			print("Epoch {} model saved!\n".format(epoch))
 

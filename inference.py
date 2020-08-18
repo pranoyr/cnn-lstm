@@ -23,15 +23,14 @@ from target_transforms import ClassLabel, VideoID
 from target_transforms import Compose as TargetCompose
 
 
-def resume_model(opt, encoder_cnn, decoder_rnn):
+def resume_model(opt, model):
     """ Resume model 
     """
     checkpoint = torch.load(opt.resume_path, map_location='cpu')
-    encoder_cnn.load_state_dict(checkpoint['encoder_state_dict'])
-    decoder_rnn.load_state_dict(checkpoint['decoder_state_dict'])
+    model.load_state_dict(checkpoint['state_dict'])
 
 
-def predict(clip, encoder, decoder):
+def predict(clip, model):
     if opt.no_mean_norm and not opt.std_norm:
         norm_method = Normalize([0, 0, 0], [1, 1, 1])
     elif not opt.std_norm:
@@ -53,7 +52,7 @@ def predict(clip, encoder, decoder):
     clip = clip.unsqueeze(0)
     with torch.no_grad():
         print(clip.shape)
-        outputs = decoder(encoder(clip))
+        outputs = model(clip)
         outputs = F.softmax(outputs)
     print(outputs)
     scores, idx = torch.topk(outputs, k=1)
@@ -73,26 +72,25 @@ if __name__ == "__main__":
     for name, label in class_to_idx.items():
         idx_to_class[label] = name
 
-    encoder, decoder = generate_model(opt, device)
+    model = generate_model(opt, device)
 
     # model = nn.DataParallel(model, device_ids=None)
     # print(model)
     if opt.resume_path:
-        resume_model(opt, encoder, decoder)
+        resume_model(opt, model)
         opt.mean = get_mean(opt.norm_value, dataset=opt.mean_dataset)
         opt.std = get_std(opt.norm_value)
-        encoder.eval()
-        decoder.eval()
+        model.eval()
 
         cam = cv2.VideoCapture(
-            '/Users/pranoyr/Desktop/v_CricketBowling_g11_c07.avi')
+            '/Users/pranoyr/Desktop/v_CricketShot_g11_c05.avi')
         clip = []
         frame_count = 0
         while True:
             ret, img = cam.read()
             if frame_count == 16:
                 print(len(clip))
-                preds = predict(clip, encoder, decoder)
+                preds = predict(clip, model)
                 draw = img.copy()
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 if preds.size(0) != 0:

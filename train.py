@@ -10,17 +10,15 @@ import random
 import numpy as np
 from utils import AverageMeter, calculate_accuracy
 
-def train_epoch(encoder_cnn, decoder_rnn, data_loader, criterion, optimizer, epoch, log_interval, device):
-    encoder_cnn.train()
-    decoder_rnn.train()
+def train_epoch(model, data_loader, criterion, optimizer, epoch, log_interval, device):
+    model.train()
  
     train_loss = 0.0
     losses = AverageMeter()
     accuracies = AverageMeter()
     for batch_idx, (data, targets) in enumerate(data_loader):
         data, targets = data.to(device), targets.to(device)
-        out_cnn = encoder_cnn(data)
-        outputs = decoder_rnn(out_cnn)
+        outputs = model(data)
 
         loss = criterion(outputs, targets)
         acc = calculate_accuracy(outputs, targets)
