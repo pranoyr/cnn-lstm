@@ -191,6 +191,7 @@ class UCF101(data.Dataset):
         target = self.data[index]
         if self.target_transform is not None:
             target = self.target_transform(target)
+        print(clip.shape)
         return clip, target
 
     def __len__(self):
