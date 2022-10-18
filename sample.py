@@ -23,16 +23,6 @@ x1 = torch.tensor([[1,2,3],[1,2,3]], dtype=torch.float)
 x = torch.tensor([[1,2,3],[1,2,3]], dtype=torch.float)
 x = F.sigmoid(x)
 
-# print(x.shape)
-# print(x1.shape)
-
-# print(x1.unsqueeze(0).shape)
-# print(x.unsqueeze(0).shape)
-
-# attn_applied = torch.bmm(x1.unsqueeze(0), x.unsqueeze(0))  
-# print(x)
-# print(x.shape)
-
 
 input = torch.randn(10, 3, 4)
 
