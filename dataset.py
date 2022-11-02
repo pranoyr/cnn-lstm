@@ -17,7 +17,6 @@ def get_training_set(opt, spatial_transform, temporal_transform,
 
     return training_data
 
-
 def get_validation_set(opt, spatial_transform, temporal_transform,
                        target_transform):
     if opt.dataset == 'ucf101':
